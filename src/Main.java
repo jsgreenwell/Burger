@@ -17,12 +17,11 @@ public class Main {
 
         System.out.print("Which option will you use?");
         int choice = Integer.parseInt(scan.nextLine());
-        if (choice > 0 && choice <=4) {
-            return choice;
-        }
 
-        System.out.println("Please enter a choice between 1 & 4");
-        return 4;
+        // TODO: Add an if here that checks if choice is between 1 & 4 and returns it
+        //       IF NOT then return 4 by default
+
+        return choice;
     }
 
     /**
@@ -49,7 +48,10 @@ public class Main {
      */
     static boolean checkExit() {
         System.out.print("Do you want to continue ordering? (yes/no)");
-        return scan.nextLine().toLowerCase().startsWith("yes");
+
+        // TODO: check if they say yes or no and return true or false based on that
+        //       Currently this always exits after the first loop.
+        return false;
     }
 
     public static void main(String[] args) {
@@ -75,18 +77,16 @@ public class Main {
                 System.out.print("Which meat would you like: ");
 
                 String meat = scan.nextLine();
-                if (meat.equalsIgnoreCase("turkey")) {
-                    order += "a turkey burger with ";
-                } else if (meat.equalsIgnoreCase("tuna")) {
-                    order += "a tuna burger with ";
-                } else {
-                    order += "a beef burger with ";
-                }
+
+                // TODO: Check if they select turkey or tuna - if so add that to order
+                //       IF NOT then add a beef burger as the default.
+                order += "a beef burger with ";
 
                 System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
                 System.out.print("\tWhich option would you like?\n " +
                         "\t\t(we don't do substitutions so only 'plain' or 'all' as options): ");
 
+                // This is pretty simple so I'll leave it - ternary operator can be if/else
                 String toppings = scan.nextLine();
                 order += toppings.equalsIgnoreCase("plain") ? "no toppings " : "all toppings ";
 
@@ -96,34 +96,33 @@ public class Main {
                         "Its $3.25 no matter the size");
                 System.out.print("Which would you like (1 or 2): ");
 
-                if (Integer.parseInt(scan.nextLine()) == 1) {
-                    order += "a garden salad ";
-                } else {
-                    order += "a house salad ";
-                }
+                // TODO: Add if/else for ordering a garden or house salad (either ternary or if/else)
+                order += "a house salad ";
 
                 order += getSize("small", "half", "full");
                 totalPrice += 325;
 
             } else if (choice == 3) {
                 System.out.println("We offer fountain drinks or water for $1.75");
+
+                // TODO: We are now adding both no matter what but we should check...
+                //       Add the if statements needed to check if we are adding these drinks
+                //       Don't forget their a buck 75 each!
                 System.out.print("Would you like a fountain drink (y/n): ");
-                if (scan.nextLine().toLowerCase().startsWith("y")) {
-                    totalPrice += 175;
-                    order += "a fountain drink ";
-                }
+                totalPrice += 175;
+                order += "a fountain drink ";
 
                 System.out.print("Would you like a water (y/n): ");
-                if (scan.nextLine().toLowerCase().startsWith("y")) {
-                    totalPrice += 175;
-                    order += "a water ";
-                }
+                totalPrice += 175;
+                order += "a water ";
 
             } else {
+                // This just prints the current order (so if over 4 we don't care)
                 System.out.printf("%s\n\tAt $%.2f\n",
                         order, totalPrice/100.0);
             }
 
+            // Call checkExit to see if we keep asking for order items.
             keepOrdering = checkExit();
         }
 
