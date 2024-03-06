@@ -65,63 +65,66 @@ public class Main {
             // At start of while loop we get the choice and see what they want
             choice = getChoice();
 
-            if (choice == 1) {
-                // Burger Order - burgers don't have sizes
-                /* Burger cost from https://ag.purdue.edu/cfdas/data-resources/the-cost-of-a-burger/
-                   Showing a 3.02 cost in IL (so *3 = 9.18 so we'll say $9.15)
-                 */
-                System.out.println("Our burgers are $9.15");
-                System.out.println("We provide turkey, tuna, or beef burgers (beef is default)");
-                System.out.print("Which meat would you like: ");
+            switch (choice) {
+                case 1:
+                    // Burger Order - burgers don't have sizes
+                    /* Burger cost from https://ag.purdue.edu/cfdas/data-resources/the-cost-of-a-burger/
+                       Showing a 3.02 cost in IL (so *3 = 9.18 so we'll say $9.15)
+                     */
+                    System.out.println("Our burgers are $9.15");
+                    System.out.println("We provide turkey, tuna, or beef burgers (beef is default)");
+                    System.out.print("Which meat would you like: ");
 
-                String meat = scan.nextLine();
-                if (meat.equalsIgnoreCase("turkey")) {
-                    order += "a turkey burger with ";
-                } else if (meat.equalsIgnoreCase("tuna")) {
-                    order += "a tuna burger with ";
-                } else {
-                    order += "a beef burger with ";
-                }
+                    String meat = scan.nextLine();
+                    if (meat.equalsIgnoreCase("turkey")) {
+                        order += "a turkey burger with ";
+                    } else if (meat.equalsIgnoreCase("tuna")) {
+                        order += "a tuna burger with ";
+                    } else {
+                        order += "a beef burger with ";
+                    }
 
-                System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
-                System.out.print("\tWhich option would you like?\n " +
-                        "\t\t(we don't do substitutions so only 'plain' or 'all' as options): ");
+                    System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
+                    System.out.print("\tWhich option would you like?\n " +
+                            "\t\t(we don't do substitutions so only 'plain' or 'all' as options): ");
 
-                String toppings = scan.nextLine();
-                order += toppings.equalsIgnoreCase("plain") ? "no toppings " : "all toppings ";
+                    String toppings = scan.nextLine();
+                    order += toppings.equalsIgnoreCase("plain") ? "no toppings " : "all toppings ";
 
-                totalPrice += 915;
-            } else if (choice == 2) {
-                System.out.println("We offer a 1. garden salad or 2. house salad (default)\n" +
-                        "Its $3.25 no matter the size");
-                System.out.print("Which would you like (1 or 2): ");
+                    totalPrice += 915;
+                    break;
+                case 2:
+                    System.out.println("We offer a 1. garden salad or 2. house salad (default)\n" +
+                            "Its $3.25 no matter the size");
+                    System.out.print("Which would you like (1 or 2): ");
 
-                if (Integer.parseInt(scan.nextLine()) == 1) {
-                    order += "a garden salad ";
-                } else {
-                    order += "a house salad ";
-                }
+                    if (Integer.parseInt(scan.nextLine()) == 1) {
+                        order += "a garden salad ";
+                    } else {
+                        order += "a house salad ";
+                    }
 
-                order += getSize("small", "half", "full");
-                totalPrice += 325;
+                    order += getSize("small", "half", "full");
+                    totalPrice += 325;
+                    break;
 
-            } else if (choice == 3) {
-                System.out.println("We offer fountain drinks or water for $1.75");
-                System.out.print("Would you like a fountain drink (y/n): ");
-                if (scan.nextLine().toLowerCase().startsWith("y")) {
-                    totalPrice += 175;
-                    order += "a fountain drink ";
-                }
+                case 3:
+                    System.out.println("We offer fountain drinks or water for $1.75");
+                    System.out.print("Would you like a fountain drink (y/n): ");
+                    if (scan.nextLine().toLowerCase().startsWith("y")) {
+                        totalPrice += 175;
+                        order += "a fountain drink ";
+                    }
 
-                System.out.print("Would you like a water (y/n): ");
-                if (scan.nextLine().toLowerCase().startsWith("y")) {
-                    totalPrice += 175;
-                    order += "a water ";
-                }
-
-            } else {
-                System.out.printf("%s\n\tAt $%.2f\n",
-                        order, totalPrice/100.0);
+                    System.out.print("Would you like a water (y/n): ");
+                    if (scan.nextLine().toLowerCase().startsWith("y")) {
+                        totalPrice += 175;
+                        order += "a water ";
+                    }
+                    break;
+                default:
+                    System.out.printf("%s\n\tAt $%.2f\n",
+                            order, totalPrice/100.0);
             }
 
             keepOrdering = checkExit();
