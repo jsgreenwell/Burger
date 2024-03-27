@@ -30,25 +30,6 @@ public class Main {
     }
 
     /**
-     * Function used by order items to determine what size the person wants.
-     * All items have 3 sizes so this displays them & checks a correct selection is made.
-     *
-     * @return The size selection based on passed options
-     */
-    static String getSize(String smallest, String medium, String largest) {
-        System.out.printf("Please select a %s, %s, %s sized item (2nd size is default): ",
-                smallest, medium, largest);
-        String size = scan.nextLine();
-        if (size.equalsIgnoreCase(smallest)) {
-            return smallest + " size ";
-        } else if (size.equalsIgnoreCase(largest)) {
-            return largest + " size ";
-        } else {
-            return medium + " size ";
-        }
-    }
-
-    /**
      * Function checks if person wants to continue ordering
      * @return True if person says they want to continue and false if not
      */
@@ -66,12 +47,11 @@ public class Main {
         List<String> order = new ArrayList<>();
 
         Burger burger = new Burger();
-        int choice = 0;
 
         // Main Loop - keep running the code until they say stop (using boolean flag)
         while (keepOrdering) {
             // At start of while loop we get the choice and see what they want
-            choice = getChoice();
+            int choice = getChoice();
 
             switch (choice) {
                 case 1:
@@ -89,13 +69,7 @@ public class Main {
 
                     System.out.print("Which meat would you like: ");
 
-                    String meat = scan.nextLine();
-                    if (burger.MEATS.contains(meat.toLowerCase())) {
-                        burger.burgerMeat = meat;
-                    } else {
-                        burger.burgerMeat = "beef";
-                    }
-
+                    burger.setBurgerMeat(scan.nextLine());
 
                     while (true) {
                         System.out.println("We can make it plain or with everything. Otherwise topping choices include");
@@ -108,10 +82,10 @@ public class Main {
 
                         // See this next line just checks if it says plain (so "I like plain" would work)
                         if (topping.toLowerCase().contains("plain")) {
-                            order.add(String.format("%s burger plain", burger.burgerMeat));
+                            order.add(String.format("%s burger plain", burger.getBurgerMeat()));
                             break;
                         } else if (topping.equalsIgnoreCase("all")) {
-                            order.add(String.format("%s burger with all toppings", burger.burgerMeat));
+                            order.add(String.format("%s burger with all toppings", burger.getBurgerMeat()));
                             break;
                         } else {
                             burger.toppings.add(topping);
@@ -119,7 +93,7 @@ public class Main {
                             System.out.println("Do you want to exit? (yes/no)");
                             if (scan.nextLine().equalsIgnoreCase("yes")) {
                                 order.add(String.format("%s burger with %s",
-                                        burger.burgerMeat, burger.toppings));
+                                        burger.getBurgerMeat(), burger.toppings));
                                 break;
                             }
                         }
