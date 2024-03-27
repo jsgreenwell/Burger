@@ -8,7 +8,7 @@ public class Main {
 
     /** This is a javadoc - it is used to describe functions
      *  Takes no parameters and prints the main menu then gets the user's selection
-     *  .
+     *
      * @return choice : The choice made by user (number 1-4)
      */
     static int getChoice() {
@@ -28,6 +28,7 @@ public class Main {
     /**
      * Function used by order items to determine what size the person wants.
      * All items have 3 sizes so this displays them & checks a correct selection is made.
+     *
      * @return The size selection based on passed options
      */
     static String getSize(String smallest, String medium, String largest) {
@@ -56,8 +57,11 @@ public class Main {
         // Set the default values for all functions
         // Have to have choice as 0 because we need to re-get it in while
         int totalPrice = 0;
+
         String order = "You've ordered ";
         boolean keepOrdering = true;
+        // TODO: Last - change order to a List of Strings and append instead of concat
+
         int choice = 0;
 
         // Main Loop - keep running the code until they say stop (using boolean flag)
@@ -67,15 +71,21 @@ public class Main {
 
             switch (choice) {
                 case 1:
+
                     // Burger Order - burgers don't have sizes
                     /* Burger cost from https://ag.purdue.edu/cfdas/data-resources/the-cost-of-a-burger/
-                       Showing a 3.02 cost in IL (so *3 = 9.18 so we'll say $9.15)
+                       Showing a 3.02 cost in IL (so *3 = 9.18 we'll say $9.15)
                      */
-                    System.out.println("Our burgers are $9.15");
+                    System.out.println("Our burgers are $9.15 for beef");
+
+                    // TODO: 1st - change this to print out the Meat options from Class (no index)
                     System.out.println("We provide turkey, tuna, or beef burgers (beef is default)");
+
                     System.out.print("Which meat would you like: ");
 
                     String meat = scan.nextLine();
+
+                    //TODO: 2nd change this to check if meat type is valid using List methods
                     if (meat.equalsIgnoreCase("turkey")) {
                         order += "a turkey burger with ";
                     } else if (meat.equalsIgnoreCase("tuna")) {
@@ -84,44 +94,36 @@ public class Main {
                         order += "a beef burger with ";
                     }
 
-                    System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
-                    System.out.print("\tWhich option would you like?\n " +
-                            "\t\t(we don't do substitutions so only 'plain' or 'all' as options): ");
 
-                    String toppings = scan.nextLine();
-                    order += toppings.equalsIgnoreCase("plain") ? "no toppings " : "all toppings ";
+                    while (true) {
+                        //TODO: 3rda: Repeat what we did with List method (need to change it to a List)
+                        //TODO: 3rdb: Check first if they say "plain" in their response (using String methods & chaining)
+                        System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
+                        System.out.print("\tWhich option (plain, all, or a topping) would you like?\n ");
 
+                        String toppings = scan.nextLine();
+                        // See this next line is not great because "I want plain" would move to default
+                        if (toppings.equalsIgnoreCase("plain")) {
+                            order += "set to no toppings ";
+                            break;
+                        } else if (toppings.equalsIgnoreCase("all")) {
+                            order += "set to all toppings";
+                            break;
+                        } else {
+                            // See and this should validate the topping first
+                            // ALSO it should check if we've selected all the toppings
+                            order += toppings;
+
+                            System.out.println("Do you want to exit? (yes/no)");
+                            if (scan.nextLine().equalsIgnoreCase("yes")) {
+                                break;
+                            }
+                        }
+                    }
                     totalPrice += 915;
                     break;
-                case 2:
-                    System.out.println("We offer a 1. garden salad or 2. house salad (default)\n" +
-                            "Its $3.25 no matter the size");
-                    System.out.print("Which would you like (1 or 2): ");
 
-                    if (Integer.parseInt(scan.nextLine()) == 1) {
-                        order += "a garden salad ";
-                    } else {
-                        order += "a house salad ";
-                    }
-
-                    order += getSize("small", "half", "full");
-                    totalPrice += 325;
-                    break;
-
-                case 3:
-                    System.out.println("We offer fountain drinks or water for $1.75");
-                    System.out.print("Would you like a fountain drink (y/n): ");
-                    if (scan.nextLine().toLowerCase().startsWith("y")) {
-                        totalPrice += 175;
-                        order += "a fountain drink ";
-                    }
-
-                    System.out.print("Would you like a water (y/n): ");
-                    if (scan.nextLine().toLowerCase().startsWith("y")) {
-                        totalPrice += 175;
-                        order += "a water ";
-                    }
-                    break;
+                // For simplicity - I've removed cases 2 & 3 for now
                 default:
                     System.out.printf("%s\n\tAt $%.2f\n",
                             order, totalPrice/100.0);
