@@ -60,7 +60,7 @@ public class Main {
 
         String order = "You've ordered ";
         boolean keepOrdering = true;
-        // TODO: Last - change order to a List of Strings and append instead of concat
+        // TODO: First: change order to a List of Strings and append instead of concat
 
         Burger burger = new Burger();
         int choice = 0;
@@ -79,14 +79,14 @@ public class Main {
                      */
                     System.out.println("Our burgers are $9.15 for beef");
 
-                    // TODO: 1st - change this to print out the Meat options from Class (no index)
+                    // TODO: 2nd - change this to print out the Meat options from Class (no index)
                     System.out.println("We provide turkey, tuna, or beef burgers (beef is default)");
 
                     System.out.print("Which meat would you like: ");
 
                     String meat = scan.nextLine();
 
-                    //TODO: 2nd change this to check if meat type is valid using List methods
+                    //TODO: 3rd change this to check if meat type is valid using List methods
                     if (meat.equalsIgnoreCase("turkey")) {
                         order += "a turkey burger with ";
                     } else if (meat.equalsIgnoreCase("tuna")) {
@@ -97,8 +97,8 @@ public class Main {
 
 
                     while (true) {
-                        //TODO: 3rda: Repeat what we did with List method (need to change it to a List)
-                        //TODO: 3rdb: Check first if they say "plain" in their response (using String methods & chaining)
+                        //TODO: 4tha: Repeat what we did with List method (need to change it to a List)
+                        //TODO: 4thb: Check first if they say "plain" in their response (using String methods & chaining)
                         System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
                         System.out.print("\tWhich option (plain, all, or a topping) would you like?\n ");
 
