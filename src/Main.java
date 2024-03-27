@@ -62,6 +62,7 @@ public class Main {
         boolean keepOrdering = true;
         // TODO: Last - change order to a List of Strings and append instead of concat
 
+        Burger burger = new Burger();
         int choice = 0;
 
         // Main Loop - keep running the code until they say stop (using boolean flag)
