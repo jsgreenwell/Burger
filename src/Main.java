@@ -1,6 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 /* Created 2/15/2024 by Sam Greenwell for students to use in class
    MIT Licensed (see license.md in root repository)
+   This is neither efficient code nor secure code - use at own risk in production level.
+   It is meant for learning to program.
  */
 public class Main {
     // Scanner variable to be shared by all functions
@@ -58,9 +62,8 @@ public class Main {
         // Have to have choice as 0 because we need to re-get it in while
         int totalPrice = 0;
 
-        String order = "You've ordered ";
         boolean keepOrdering = true;
-        // TODO: First: change order to a List of Strings and append instead of concat
+        List<String> order = new ArrayList<>();
 
         Burger burger = new Burger();
         int choice = 0;
@@ -77,46 +80,46 @@ public class Main {
                     /* Burger cost from https://ag.purdue.edu/cfdas/data-resources/the-cost-of-a-burger/
                        Showing a 3.02 cost in IL (so *3 = 9.18 we'll say $9.15)
                      */
-                    System.out.println("Our burgers are $9.15 for beef");
+                    System.out.println("Our burgers are $9.15 + toppings");
+                    System.out.println("We provide the following meats (beef is default)");
 
-                    // TODO: 2nd - change this to print out the Meat options from Class (no index)
-                    System.out.println("We provide turkey, tuna, or beef burgers (beef is default)");
+                    for (var meat : burger.MEATS) {
+                        System.out.printf("\t%s\n", meat);
+                    }
 
                     System.out.print("Which meat would you like: ");
 
                     String meat = scan.nextLine();
-
-                    //TODO: 3rd change this to check if meat type is valid using List methods
-                    if (meat.equalsIgnoreCase("turkey")) {
-                        order += "a turkey burger with ";
-                    } else if (meat.equalsIgnoreCase("tuna")) {
-                        order += "a tuna burger with ";
+                    if (burger.MEATS.contains(meat.toLowerCase())) {
+                        burger.burgerMeat = meat;
                     } else {
-                        order += "a beef burger with ";
+                        burger.burgerMeat = "beef";
                     }
 
 
                     while (true) {
-                        //TODO: 4tha: Repeat what we did with List method (need to change it to a List)
-                        //TODO: 4thb: Check first if they say "plain" in their response (using String methods & chaining)
-                        System.out.println("We can make it plain or with tomatoes, onion, and pickles (default)");
-                        System.out.print("\tWhich option (plain, all, or a topping) would you like?\n ");
+                        System.out.println("We can make it plain or with everything. Otherwise topping choices include");
+                        for (var topping : burger.POSSIBLETOPPINGS) {
+                            System.out.printf("\t%s\n", topping);
+                        }
+                        System.out.print("\tWhich option (plain, all, or a topping) would you like? ");
 
-                        String toppings = scan.nextLine();
-                        // See this next line is not great because "I want plain" would move to default
-                        if (toppings.equalsIgnoreCase("plain")) {
-                            order += "set to no toppings ";
+                        String topping = scan.nextLine();
+
+                        // See this next line just checks if it says plain (so "I like plain" would work)
+                        if (topping.toLowerCase().contains("plain")) {
+                            order.add(String.format("%s burger plain", burger.burgerMeat));
                             break;
-                        } else if (toppings.equalsIgnoreCase("all")) {
-                            order += "set to all toppings";
+                        } else if (topping.equalsIgnoreCase("all")) {
+                            order.add(String.format("%s burger with all toppings", burger.burgerMeat));
                             break;
                         } else {
-                            // See and this should validate the topping first
-                            // ALSO it should check if we've selected all the toppings
-                            order += toppings;
+                            burger.toppings.add(topping);
 
                             System.out.println("Do you want to exit? (yes/no)");
                             if (scan.nextLine().equalsIgnoreCase("yes")) {
+                                order.add(String.format("%s burger with %s",
+                                        burger.burgerMeat, burger.toppings));
                                 break;
                             }
                         }
@@ -125,6 +128,16 @@ public class Main {
                     break;
 
                 // For simplicity - I've removed cases 2 & 3 for now
+                case 2:
+                    System.out.println("adding a simple salad ($2) under construction");
+                    order.add("simple salad");
+                    totalPrice += 200;
+                    break;
+                case 3:
+                    System.out.println("Adding a medium fountain drink ($1) - under construction");
+                    order.add("medium fountain drink");
+                    totalPrice += 100;
+                    break;
                 default:
                     System.out.printf("%s\n\tAt $%.2f\n",
                             order, totalPrice/100.0);
